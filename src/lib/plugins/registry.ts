@@ -9,6 +9,9 @@ import { transparencyCleanerPlugin } from "./transparency-cleaner";
 import { speckleRemoverPlugin } from "./speckle-remover";
 import { distressPlugin } from "./distress";
 import { clippingMaskPlugin } from "./clipping-mask";
+import { strokesPlugin } from "./strokes";
+import { strokesAdvancedPlugin } from "./strokes-advanced";
+import { repositionPlugin } from "./reposition";
 
 /**
  * Central plugin registry. Each PR adds entries here so the editor UI
@@ -17,6 +20,7 @@ import { clippingMaskPlugin } from "./clipping-mask";
 const ALL_PLUGINS: PluginDefinition[] = [
   trimPlugin,
   paddingPlugin,
+  repositionPlugin,
   clippingMaskPlugin,
   backgroundColorPlugin,
   solidColorPlugin,
@@ -25,6 +29,8 @@ const ALL_PLUGINS: PluginDefinition[] = [
   transparencyCleanerPlugin,
   speckleRemoverPlugin,
   distressPlugin,
+  strokesPlugin,
+  strokesAdvancedPlugin,
 ];
 
 const BY_ID = new Map<string, PluginDefinition>(
