@@ -49,17 +49,28 @@ npm run lint
 
 A plugin is a deterministic function `(canvas, options) => canvas`. Use the helpers in `src/lib/image/canvas.ts` to keep things consistent.
 
+## Plugins shipped
+
+- [x] Trim
+- [x] Padding
+- [x] Reposition (explicit canvas size + 9-anchor placement)
+- [x] Clipping Mask (circle / ellipse / square / rounded rect)
+- [x] Background Color
+- [x] Solid Color
+- [x] Color Removal (up to 3 targets, tolerance + edge feather)
+- [x] Image Adjustments (brightness / contrast / saturation / hue / gamma / invert)
+- [x] Transparency Cleaner
+- [x] Speckle Remover
+- [x] Distress
+- [x] Strokes (configurable color / thickness / sample density)
+- [x] Strokes Advanced (two stacked stroke layers)
+- [x] Upscaler (1.5× / 2× / 3× / 4× / 8× / 16× with optional unsharp-mask)
+
 ## Roadmap
 
-PR-by-PR rollout of the remaining ReadyPixl plugins:
-
-- [x] Trim, Padding, Background Color, Solid Color, Image Adjustments
-- [ ] Color Removal, Transparency Cleaner, Speckle Remover
-- [ ] Distress, Clipping Mask
-- [ ] Strokes, Strokes Advanced
-- [ ] Reposition (canvas resize / image alignment)
-- [ ] Upscaler 2x/4x (Real-ESRGAN via onnxruntime-web, with bicubic fallback)
-- [ ] Upscaler 8x/16x
+- [ ] Real-ESRGAN ONNX backend behind the existing Upscaler plugin id (free, in-browser)
+- [ ] Web Worker pipeline runner for large batches
+- [ ] Pipeline import/export as JSON for shareable presets
 
 ## License
 
