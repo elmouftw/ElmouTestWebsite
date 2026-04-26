@@ -4,6 +4,11 @@ import { paddingPlugin } from "./padding";
 import { backgroundColorPlugin } from "./background-color";
 import { solidColorPlugin } from "./solid-color";
 import { imageAdjustmentsPlugin } from "./image-adjustments";
+import { colorRemovalPlugin } from "./color-removal";
+import { transparencyCleanerPlugin } from "./transparency-cleaner";
+import { speckleRemoverPlugin } from "./speckle-remover";
+import { distressPlugin } from "./distress";
+import { clippingMaskPlugin } from "./clipping-mask";
 
 /**
  * Central plugin registry. Each PR adds entries here so the editor UI
@@ -12,9 +17,14 @@ import { imageAdjustmentsPlugin } from "./image-adjustments";
 const ALL_PLUGINS: PluginDefinition[] = [
   trimPlugin,
   paddingPlugin,
+  clippingMaskPlugin,
   backgroundColorPlugin,
   solidColorPlugin,
+  colorRemovalPlugin,
   imageAdjustmentsPlugin,
+  transparencyCleanerPlugin,
+  speckleRemoverPlugin,
+  distressPlugin,
 ];
 
 const BY_ID = new Map<string, PluginDefinition>(
