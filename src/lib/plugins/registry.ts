@@ -12,6 +12,7 @@ import { clippingMaskPlugin } from "./clipping-mask";
 import { strokesPlugin } from "./strokes";
 import { strokesAdvancedPlugin } from "./strokes-advanced";
 import { repositionPlugin } from "./reposition";
+import { upscalerPlugin } from "./upscaler";
 
 /**
  * Central plugin registry. Each PR adds entries here so the editor UI
@@ -31,6 +32,7 @@ const ALL_PLUGINS: PluginDefinition[] = [
   distressPlugin,
   strokesPlugin,
   strokesAdvancedPlugin,
+  upscalerPlugin,
 ];
 
 const BY_ID = new Map<string, PluginDefinition>(
