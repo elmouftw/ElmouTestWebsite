@@ -28,10 +28,13 @@ export function PluginFieldControl({ field, value, onChange }: Props) {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
+      if (typeof value === "string" && value.startsWith("blob:")) {
+        URL.revokeObjectURL(value);
+      }
       const url = URL.createObjectURL(file);
       onChange(field.key, url);
     },
-    [field.key, onChange],
+    [field.key, onChange, value],
   );
 
   if (field.type === "checkbox") {

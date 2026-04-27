@@ -108,7 +108,7 @@ export const cornerErasePlugin: PluginDefinition = {
           );
           const edge = Math.min(dx, dy);
           if (edge < feather) {
-            const t = edge / feather;
+            const t = 1 - edge / feather;
             d[idx + 3] = Math.round(d[idx + 3] * t);
           } else {
             d[idx + 3] = 0;

@@ -106,7 +106,7 @@ export const framesPlugin: PluginDefinition = {
       const cx = W / 2;
       const cy = H / 2;
       const outerRadius = Math.sqrt(cx * cx + cy * cy);
-      const innerRadius = outerRadius * (1 - size / 100);
+      const innerRadius = Math.max(0, outerRadius * (1 - size / 100));
       const gradient = ctx.createRadialGradient(cx, cy, innerRadius, cx, cy, outerRadius);
       gradient.addColorStop(0, "rgba(0,0,0,0)");
       gradient.addColorStop(1, "rgba(0,0,0,0.8)");
