@@ -98,17 +98,22 @@ export const cornerErasePlugin: PluginDefinition = {
       for (let x = regionX; x < regionX + eraseW && x < W; x++) {
         const idx = (y * W + x) * 4;
         if (feather > 0) {
-          const dx = Math.min(
-            Math.abs(x - regionX),
-            Math.abs(x - (regionX + eraseW - 1)),
-          );
-          const dy = Math.min(
-            Math.abs(y - regionY),
-            Math.abs(y - (regionY + eraseH - 1)),
-          );
-          const edge = Math.min(dx, dy);
-          if (edge < feather) {
-            const t = 1 - edge / feather;
+          let innerDist: number;
+          switch (corner) {
+            case "top-left":
+              innerDist = Math.min(regionX + eraseW - 1 - x, regionY + eraseH - 1 - y);
+              break;
+            case "top-right":
+              innerDist = Math.min(x - regionX, regionY + eraseH - 1 - y);
+              break;
+            case "bottom-left":
+              innerDist = Math.min(regionX + eraseW - 1 - x, y - regionY);
+              break;
+            default:
+              innerDist = Math.min(x - regionX, y - regionY);
+          }
+          if (innerDist < feather) {
+            const t = innerDist / feather;
             d[idx + 3] = Math.round(d[idx + 3] * t);
           } else {
             d[idx + 3] = 0;
