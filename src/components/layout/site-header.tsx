@@ -13,14 +13,14 @@ export function SiteHeader() {
           <span>PixlForge</span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-          <Link href="/app" className="hover:text-foreground">
+          <Link href="/" className="hover:text-foreground">
             Editor
           </Link>
           <Link href="/plugins" className="hover:text-foreground">
             Plugins
           </Link>
-          <Link href="/download" className="hover:text-foreground">
-            Download
+          <Link href="/about" className="hover:text-foreground">
+            About
           </Link>
         </nav>
         <div className="flex items-center gap-2">
@@ -28,7 +28,7 @@ export function SiteHeader() {
             <Link href="/plugins">Plugins</Link>
           </Button>
           <Button asChild size="sm">
-            <Link href="/app">Open Editor</Link>
+            <Link href="/">Open Editor</Link>
           </Button>
         </div>
       </div>
