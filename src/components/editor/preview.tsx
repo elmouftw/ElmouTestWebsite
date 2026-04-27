@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
 import { useEditorStore } from "@/lib/store";
@@ -13,10 +13,43 @@ export function Preview() {
   const selected = images.find((i) => i.id === selectedImageId) ?? null;
   const [view, setView] = useState<ViewMode>("after");
   const [lastId, setLastId] = useState<string | null>(selectedImageId);
+  const [outDims, setOutDims] = useState<{
+    src: string;
+    w: number;
+    h: number;
+  } | null>(null);
+  const processedSrc = selected?.processedSrc ?? null;
+  const [lastProcessedSrc, setLastProcessedSrc] = useState<string | null>(
+    processedSrc,
+  );
   if (lastId !== selectedImageId) {
     setLastId(selectedImageId);
     setView("after");
   }
+  if (lastProcessedSrc !== processedSrc) {
+    setLastProcessedSrc(processedSrc);
+    if (outDims && outDims.src !== processedSrc) setOutDims(null);
+  }
+
+  useEffect(() => {
+    if (!processedSrc) return;
+    let cancelled = false;
+    const img = new window.Image();
+    img.onload = () => {
+      if (!cancelled) {
+        setOutDims({
+          src: processedSrc,
+          w: img.naturalWidth,
+          h: img.naturalHeight,
+        });
+      }
+    };
+    img.src = processedSrc;
+    return () => {
+      cancelled = true;
+      img.onload = null;
+    };
+  }, [processedSrc]);
 
   if (!selected) {
     return (
@@ -35,6 +68,13 @@ export function Preview() {
         <div className="text-sm text-muted-foreground">
           <span className="font-medium text-foreground">{selected.name}</span>{" "}
           · {selected.width}×{selected.height}
+          {outDims &&
+            outDims.src === processedSrc &&
+            (outDims.w !== selected.width || outDims.h !== selected.height) && (
+              <span className="ml-1 font-medium text-foreground">
+                → {outDims.w}×{outDims.h}
+              </span>
+            )}
         </div>
         <div className="inline-flex rounded-md border bg-muted/40 p-0.5 text-xs">
           {(["before", "split", "after"] as ViewMode[]).map((m) => (

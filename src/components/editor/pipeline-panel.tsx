@@ -63,7 +63,7 @@ export function PipelinePanel() {
                   or remove them at any time.
                 </SheetDescription>
               </SheetHeader>
-              <div className="mt-4 space-y-2 px-4 pb-4">
+              <div className="min-h-0 flex-1 space-y-2 overflow-y-auto px-4 pb-4">
                 {listPlugins().map((p) => (
                   <button
                     key={p.id}
