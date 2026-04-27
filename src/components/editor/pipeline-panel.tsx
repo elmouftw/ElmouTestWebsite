@@ -80,10 +80,14 @@ export function PipelinePanel() {
       toast.error("Pipeline is empty");
       return;
     }
-    addPreset(name, pipeline);
+    const { hadBlobUrls } = addPreset(name, pipeline);
     setPresetName("");
     setPresets(loadPresets());
-    toast.success(`Preset "${name}" saved`);
+    if (hadBlobUrls) {
+      toast.warning(`Preset "${name}" saved. Note: uploaded file references (watermarks, masks) cannot be saved in presets — you'll need to re-upload them after loading.`);
+    } else {
+      toast.success(`Preset "${name}" saved`);
+    }
   }, [presetName, pipeline]);
 
   const handleLoadPreset = useCallback(

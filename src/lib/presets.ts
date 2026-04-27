@@ -1,6 +1,6 @@
 "use client";
 
-import type { PipelineStep } from "./plugins/types";
+import type { PipelineStep, PluginOptions } from "./plugins/types";
 
 export interface Preset {
   id: string;
@@ -31,17 +31,45 @@ export function savePresets(presets: Preset[]): void {
   }
 }
 
-export function addPreset(name: string, pipeline: PipelineStep[]): Preset {
+function stripBlobUrls(options: PluginOptions): {
+  cleaned: PluginOptions;
+  hadBlobs: boolean;
+} {
+  let hadBlobs = false;
+  const cleaned: PluginOptions = {};
+  for (const [key, val] of Object.entries(options)) {
+    if (typeof val === "string" && val.startsWith("blob:")) {
+      cleaned[key] = "";
+      hadBlobs = true;
+    } else {
+      cleaned[key] = val;
+    }
+  }
+  return { cleaned, hadBlobs };
+}
+
+export function addPreset(
+  name: string,
+  pipeline: PipelineStep[],
+): { preset: Preset; hadBlobUrls: boolean } {
   const presets = loadPresets();
+  let hadBlobUrls = false;
+
+  const sanitizedPipeline = pipeline.map((s) => {
+    const { cleaned, hadBlobs } = stripBlobUrls(s.options);
+    if (hadBlobs) hadBlobUrls = true;
+    return { ...s, options: cleaned };
+  });
+
   const preset: Preset = {
     id: `preset-${Date.now()}`,
     name,
-    pipeline: pipeline.map((s) => ({ ...s })),
+    pipeline: sanitizedPipeline,
     createdAt: Date.now(),
   };
   presets.push(preset);
   savePresets(presets);
-  return preset;
+  return { preset, hadBlobUrls };
 }
 
 export function deletePreset(id: string): void {
