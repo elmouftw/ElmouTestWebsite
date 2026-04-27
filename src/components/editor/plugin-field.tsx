@@ -1,5 +1,7 @@
 "use client";
 
+import { useCallback } from "react";
+import { Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
@@ -21,6 +23,16 @@ interface Props {
 
 export function PluginFieldControl({ field, value, onChange }: Props) {
   const id = `field-${field.key}`;
+
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      onChange(field.key, url);
+    },
+    [field.key, onChange],
+  );
 
   if (field.type === "checkbox") {
     return (
@@ -108,6 +120,49 @@ export function PluginFieldControl({ field, value, onChange }: Props) {
           step={field.step}
           value={[numeric]}
           onValueChange={([v]) => onChange(field.key, v)}
+        />
+      </div>
+    );
+  }
+
+  if (field.type === "file") {
+    const hasFile = Boolean(value);
+    return (
+      <div className="space-y-1.5">
+        <Label htmlFor={id}>{field.label}</Label>
+        {field.description && (
+          <p className="text-xs text-muted-foreground">{field.description}</p>
+        )}
+        <label
+          htmlFor={id}
+          className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed bg-muted/30 px-3 py-2 text-xs transition-colors hover:bg-muted/50"
+        >
+          <Upload className="size-3.5 shrink-0" />
+          <span className="truncate text-muted-foreground">
+            {hasFile ? "Image selected — click to change" : "Click to upload image"}
+          </span>
+          <input
+            id={id}
+            type="file"
+            accept={field.accept ?? "image/*"}
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </label>
+      </div>
+    );
+  }
+
+  if (field.type === "text") {
+    return (
+      <div className="space-y-1.5">
+        <Label htmlFor={id}>{field.label}</Label>
+        <Input
+          id={id}
+          type="text"
+          value={String(value ?? field.default)}
+          placeholder={field.placeholder}
+          onChange={(e) => onChange(field.key, e.target.value)}
         />
       </div>
     );

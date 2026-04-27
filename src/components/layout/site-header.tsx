@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "./theme-toggle";
 
 export function SiteHeader() {
   return (
@@ -24,7 +25,8 @@ export function SiteHeader() {
           </Link>
         </nav>
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm">
+          <ThemeToggle />
+          <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex">
             <Link href="/plugins">Plugins</Link>
           </Button>
           <Button asChild size="sm">

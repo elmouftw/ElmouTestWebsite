@@ -19,7 +19,9 @@ export type PluginFieldType =
   | "number"
   | "slider"
   | "checkbox"
-  | "select";
+  | "select"
+  | "file"
+  | "text";
 
 export interface PluginFieldBase {
   key: string;
@@ -52,11 +54,25 @@ export interface PluginSelectField extends PluginFieldBase {
   options: { value: string; label: string }[];
 }
 
+export interface PluginFileField extends PluginFieldBase {
+  type: "file";
+  default: string;
+  accept?: string;
+}
+
+export interface PluginTextField extends PluginFieldBase {
+  type: "text";
+  default: string;
+  placeholder?: string;
+}
+
 export type PluginField =
   | PluginColorField
   | PluginNumberField
   | PluginCheckboxField
-  | PluginSelectField;
+  | PluginSelectField
+  | PluginFileField
+  | PluginTextField;
 
 export type PluginOptions = Record<string, string | number | boolean>;
 
