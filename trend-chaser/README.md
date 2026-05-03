@@ -48,3 +48,40 @@ python3 -m http.server 8000
 
 Or open `index.html` directly in a browser — the copy fallback handles
 `file://` too.
+
+## Auto-refresh (every 12 hours)
+
+`scripts/regen.py` re-fetches the live upstream report and rewrites
+`index.html` / `styles.css` / `assets/`. `script.js` is **not** touched so the
+HTTP-context clipboard fallback is preserved across refreshes.
+
+Run it manually any time:
+
+```bash
+pip install Pillow
+python3 trend-chaser/scripts/regen.py
+```
+
+In CI it runs every 12h via [`.github/workflows/refresh-trend-chaser.yml`](../.github/workflows/refresh-trend-chaser.yml).
+The workflow:
+
+1. Fetches `https://niche-please-trends.surge.sh/`.
+2. Regenerates `trend-chaser/` (idempotent — filenames are derived from the
+   upstream base64 payload, so unchanged images don't churn).
+3. Commits any diff back to the branch.
+4. Deploys `trend-chaser/` to GitHub Pages.
+
+### One-time setup for GitHub Pages
+
+In the repo settings:
+
+1. **Settings → Pages → Build and deployment → Source:** *GitHub Actions*.
+2. **Settings → Actions → General → Workflow permissions:** *Read and write
+   permissions* (so the workflow can commit refreshed content).
+
+Once the workflow runs, the live URL will be
+`https://<user>.github.io/<repo>/` — for this repo,
+`https://elmouftw.github.io/ElmouTestWebsite/`.
+
+Trigger an immediate refresh from **Actions → Refresh Trend Chaser → Run
+workflow**.
