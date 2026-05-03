@@ -19,7 +19,6 @@ import hashlib
 import re
 import sys
 import urllib.request
-from io import BytesIO
 from pathlib import Path
 
 from PIL import Image
@@ -93,16 +92,19 @@ def replace_images(html: str) -> tuple[str, set[str]]:
         b64 = match.group(2)
         name = f"img-{hash_payload(b64)}.{ext}"
         path = ASSETS / name
-        if name not in used:
-            used.add(name)
-            if not path.exists():
-                try:
-                    path.write_bytes(base64.b64decode(b64))
-                    optimize_image(path)
-                    print(f"  + {name}")
-                except Exception as exc:
-                    print(f"  ! failed to write {name}: {exc}", file=sys.stderr)
-                    return match.group(0)  # leave URI in place
+        if name in used:
+            return f"assets/{name}"
+        if not path.exists():
+            try:
+                path.write_bytes(base64.b64decode(b64))
+                optimize_image(path)
+                print(f"  + {name}")
+            except Exception as exc:
+                # Don't add to `used` — preserve the data URI so a retry on
+                # a later occurrence (or a future run) can still recover.
+                print(f"  ! failed to write {name}: {exc}", file=sys.stderr)
+                return match.group(0)
+        used.add(name)
         return f"assets/{name}"
 
     return DATA_URI_RE.sub(repl, html), used
