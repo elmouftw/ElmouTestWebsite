@@ -9,6 +9,22 @@ on:
     # every 12 hours, on the hour (UTC)
     - cron: '0 */12 * * *'
   workflow_dispatch:
+  # Re-publish whenever the workflow itself, the regen script, or the static
+  # files we serve change. This guarantees Pages picks up structural edits
+  # without waiting for the next scheduled refresh — and conveniently lets
+  # any merge to default kick off the very first run.
+  push:
+    branches:
+      - devin/1777220838-pr1-scaffold
+      - main
+      - master
+    paths:
+      - '.github/workflows/refresh-trend-chaser.yml'
+      - 'trend-chaser/scripts/**'
+      - 'trend-chaser/index.html'
+      - 'trend-chaser/styles.css'
+      - 'trend-chaser/script.js'
+      - 'trend-chaser/assets/**'
 
 permissions:
   contents: write   # commit regen results back to the repo
