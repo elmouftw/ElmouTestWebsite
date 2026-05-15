@@ -271,3 +271,27 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .slang-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
 .slang-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
 .slang-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+/* ── AMAZON NEW ARRIVALS SECTION (Session 18) ── */
+.amz-new-section{max-width:1500px;margin:0 auto 48px;padding:0 20px}
+.amz-new-heading{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.amz-new-heading-icon{font-size:1.6rem}
+.amz-new-heading-title{font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:.01em}
+.amz-new-subhead{font-size:.78rem;color:var(--text-dim);margin-bottom:18px;padding-left:4px}
+.amz-new-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.amz-new-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .15s}
+.amz-new-card:hover{border-color:rgba(255,153,0,.4);transform:translateY(-2px)}
+.amz-new-img-wrap{width:100%;aspect-ratio:1/1;overflow:hidden;background:#111;position:relative}
+.amz-new-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.amz-new-card:hover .amz-new-img-wrap img{transform:scale(1.04)}
+.amz-new-badge{position:absolute;top:8px;left:8px;font-size:.6rem;font-weight:800;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em}
+.amz-new-badge.bestseller{background:rgba(255,153,0,.9);color:#111}
+.amz-new-badge.newrelease{background:rgba(0,230,118,.85);color:#111}
+.amz-new-body{padding:12px 12px 10px;display:flex;flex-direction:column;gap:6px;flex:1}
+.amz-new-title{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.88);line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.amz-new-meta{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:6px;gap:6px}
+.amz-new-price{font-size:.8rem;font-weight:800;color:#ff9100}
+.amz-new-bsr{font-size:.65rem;color:var(--text-dim);background:rgba(255,255,255,.06);border-radius:5px;padding:2px 7px;white-space:nowrap}
+.amz-new-bsr.low{color:#00e676;background:rgba(0,230,118,.1)}
+.amz-new-bsr.mid{color:#ff9100;background:rgba(255,149,0,.1)}
+.amz-new-link{display:block;text-align:center;font-size:.68rem;font-weight:700;color:#ff9100;text-decoration:none;padding:7px;border-top:1px solid rgba(255,255,255,.07);letter-spacing:.03em;transition:background .15s}
+.amz-new-link:hover{background:rgba(255,153,0,.12)}
