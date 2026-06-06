@@ -17,34 +17,50 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .stat-link:hover{background:rgba(255,85,0,.1)}
 .scan-time{font-size:.72rem;color:var(--text-dim);letter-spacing:.02em;margin-top:4px}
 /* ── TREND GRID ── */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px;max-width:1500px;margin:28px auto;padding:0 20px 60px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px;max-width:1320px;margin:0 auto;padding:0 16px 60px}
 /* ── CALENDAR SECTION ── */
-.cal-section{max-width:1500px;margin:0 auto 40px;padding:0 20px}
+.cal-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
 .cal-heading{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .cal-heading-title{font-family:'Montserrat',sans-serif;font-size:1.15rem;font-weight:900;background:linear-gradient(135deg,#ff9100,#e91e8c);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .cal-heading-icon{font-size:1.2rem}
 .cal-subhead{font-size:.74rem;color:var(--text-muted);margin-bottom:16px}
 .cal-subhead b{color:#ff9100}
-.cal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px}
-/* ── CAL CARD — collapsed row + expandable detail ── */
-.cal-card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;transition:background .15s,border-color .15s;user-select:none}
-.cal-card:hover{background:rgba(255,255,255,.06);border-color:rgba(255,85,0,.2)}
-.cal-card.open{border-color:rgba(255,85,0,.35);background:rgba(255,255,255,.05)}
-.cal-row{display:flex;align-items:center;gap:10px}
-.cal-caret{display:flex;align-items:center;gap:4px;margin-left:auto;flex-shrink:0;color:rgba(255,255,255,.35);font-size:.65rem;font-weight:700;letter-spacing:.04em;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:4px 10px;transition:all .2s;white-space:nowrap}
-.cal-caret .caret-arrow{font-size:.7rem;transition:transform .25s;display:inline-block}
-.cal-card:hover .cal-caret{color:rgba(255,255,255,.6);border-color:rgba(255,85,0,.3);background:rgba(255,85,0,.08)}
-.cal-card.open .cal-caret{color:#ff9100;border-color:rgba(255,85,0,.4);background:rgba(255,85,0,.1)}
-.cal-card.open .cal-caret .caret-arrow{transform:rotate(180deg)}
-.cal-urgency{font-size:.58rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;padding:4px 9px;border-radius:99px;flex-shrink:0}
+.cal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:8px}
+/* ── CAL CARD ── */
+.cal-card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-left:3px solid transparent;border-radius:10px;padding:12px 14px 12px 12px;cursor:pointer;transition:background .15s,border-color .15s;user-select:none}
+.cal-card.act-now{border-left-color:#ff4444}
+.cal-card.coming-soon{border-left-color:#ff9100}
+.cal-card.this-month{border-left-color:#ffd600}
+.cal-card.plan-ahead{border-left-color:rgba(255,255,255,.15)}
+.cal-card:hover{background:rgba(255,255,255,.05)}
+.cal-card.open{background:rgba(255,255,255,.04)}
+.cal-row{display:flex;align-items:center;gap:12px}
+/* Date countdown block */
+.cal-date-block{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:44px;width:44px;height:44px;background:rgba(255,255,255,.05);border-radius:8px;flex-shrink:0}
+.cal-date-num{font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:900;color:#fff;line-height:1}
+.cal-date-label{font-size:.52rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.35);margin-top:1px}
+.cal-card.act-now .cal-date-block{background:rgba(255,68,68,.12)}
+.cal-card.act-now .cal-date-num{color:#ff4444}
+.cal-card.coming-soon .cal-date-block{background:rgba(255,145,0,.1)}
+.cal-card.coming-soon .cal-date-num{color:#ff9100}
+.cal-card.this-month .cal-date-block{background:rgba(255,214,0,.08)}
+.cal-card.this-month .cal-date-num{color:#ffd600}
+/* Card body */
+.cal-body{flex:1;min-width:0}
+.cal-name{font-size:.82rem;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px}
+.cal-meta-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cal-meta{font-size:.67rem;color:var(--text-muted)}
+/* Urgency pill — now inline with date */
+.cal-urgency{font-size:.55rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap;padding:2px 7px;border-radius:99px;flex-shrink:0}
 .cal-urgency.act-now{background:rgba(220,40,40,.15);color:#ff4444;border:1px solid rgba(220,40,40,.3)}
 .cal-urgency.coming-soon{background:rgba(255,145,0,.12);color:#ff9100;border:1px solid rgba(255,145,0,.28)}
 .cal-urgency.this-month{background:rgba(255,214,0,.1);color:#ffd600;border:1px solid rgba(255,214,0,.22)}
-.cal-urgency.plan-ahead{background:rgba(255,255,255,.05);color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.1)}
-.cal-body{flex:1;min-width:0}
-.cal-name{font-size:.8rem;font-weight:700;color:var(--text);line-height:1.3}
-.cal-meta{font-size:.68rem;color:var(--text-muted);margin-top:2px}
-.cal-days{font-size:.68rem;color:rgba(255,255,255,.3);white-space:nowrap;flex-shrink:0;text-align:right}
+.cal-urgency.plan-ahead{background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1)}
+/* Caret */
+.cal-caret{flex-shrink:0;color:rgba(255,255,255,.25);padding:4px}
+.cal-caret .caret-arrow{font-size:.65rem;transition:transform .25s;display:inline-block}
+.cal-card:hover .cal-caret{color:rgba(255,255,255,.5)}
+.cal-card.open .cal-caret .caret-arrow{transform:rotate(180deg)}
 /* ── EXPAND SECTION ── */
 .cal-expand{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .cal-card.open .cal-expand{display:block}
@@ -222,8 +238,29 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .sec-toggle-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);border-radius:8px;padding:4px 14px;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
 .sec-toggle-btn:hover{background:rgba(255,255,255,.12);color:#fff}
 .sec-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+/* ── I NEED THIS T-SHIRT SECTION ── */
+.ints-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
+.ints-heading{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.ints-heading-title{font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:900;background:linear-gradient(135deg,#ff9100,#e91e8c);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ints-subhead{font-size:.72rem;color:var(--text-muted);margin-bottom:14px}
+.ints-subhead b{color:#ff9100}
+.ints-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+/* ── HOW TO USE BLOCK (shared across sections) ── */
+.how-to-use{display:flex;align-items:flex-start;gap:10px;background:rgba(255,145,0,.06);border:1px solid rgba(255,145,0,.18);border-radius:10px;padding:11px 14px;margin-bottom:16px}
+.how-to-use-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+.how-to-use-body{flex:1;min-width:0}
+.how-to-use-title{font-size:.62rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#ff9100;margin-bottom:4px}
+.how-to-use-text{font-size:.72rem;color:rgba(255,255,255,.65);line-height:1.55}
+.how-to-use-text b{color:rgba(255,255,255,.9)}
+.ints-btn{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 13px;cursor:pointer;transition:background .15s,border-color .15s;text-decoration:none}
+.ints-btn:hover{background:rgba(255,255,255,.07);border-color:rgba(255,85,0,.3)}
+.ints-btn-icon{font-size:1.2rem;flex-shrink:0}
+.ints-btn-body{min-width:0}
+.ints-btn-name{font-size:.75rem;font-weight:800;color:#fff;white-space:nowrap}
+.ints-btn-tabs{font-size:.6rem;color:var(--text-muted);margin-top:1px}
+.ints-btn-tabs b{color:#ff9100}
 /* ── VISUAL TRENDS SECTION ── */
-.vt-section{max-width:1320px;margin:0 auto 48px;padding:0 16px}
+.vt-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
 .vt-heading{display:flex;align-items:center;gap:12px;margin-bottom:8px}
 .vt-heading-icon{font-size:1.6rem}
 .vt-heading-title{font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:.01em}
@@ -248,7 +285,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .vt-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
 .vt-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
 /* ── SLANG SECTION ── */
-.slang-section{max-width:1320px;margin:0 auto 48px;padding:0 16px}
+.slang-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
 .slang-heading{display:flex;align-items:center;gap:12px;margin-bottom:8px}
 .slang-heading-icon{font-size:1.6rem}
 .slang-heading-title{font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:.01em}
@@ -272,7 +309,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .slang-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
 .slang-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
 /* ── AMAZON NEW ARRIVALS SECTION (Session 18) ── */
-.amz-new-section{max-width:1500px;margin:0 auto 48px;padding:0 20px}
+.amz-new-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
 .amz-new-heading{display:flex;align-items:center;gap:12px;margin-bottom:6px}
 .amz-new-heading-icon{font-size:1.6rem}
 .amz-new-heading-title{font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:.01em}
