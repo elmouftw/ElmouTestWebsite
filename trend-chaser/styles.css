@@ -284,6 +284,200 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .vt-link.pinterest{background:rgba(230,0,35,.15);color:#e60023;border:1px solid rgba(230,0,35,.3)}
 .vt-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
 .vt-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
+/* ── MEME SECTION ── */
+.meme-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
+.meme-heading{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.meme-heading-icon{font-size:1.6rem}
+.meme-heading-title{font-size:1.35rem;font-weight:800;color:var(--text-primary)}
+.meme-subhead{font-size:.8rem;color:var(--text-dim);margin-bottom:14px}
+.meme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:16px}
+.meme-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s;position:relative}
+.meme-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.meme-rank{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.75);color:#ff9100;font-size:.75rem;font-weight:900;padding:2px 8px;border-radius:20px;z-index:2}
+.meme-img{width:100%;height:180px;object-fit:cover;display:block}
+.meme-img-placeholder{width:100%;height:120px;display:flex;align-items:center;justify-content:center;font-size:3rem;background:rgba(255,255,255,.03)}
+.meme-body{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1}
+.meme-title{font-size:.85rem;font-weight:700;color:var(--text-primary);line-height:1.35}
+.meme-meta{display:flex;flex-wrap:wrap;gap:6px;font-size:.7rem}
+.meme-sub{background:rgba(255,69,0,.15);color:#ff6314;padding:2px 7px;border-radius:10px;font-weight:700}
+.meme-age{padding:2px 7px;border-radius:10px;font-weight:700}
+.meme-age-hot{background:rgba(255,60,60,.15);color:#ff4444}
+.meme-age-warm{background:rgba(255,149,0,.15);color:#ff9100}
+.meme-age-old{background:rgba(150,150,150,.12);color:#aaa}
+.meme-score{color:#00e676;font-weight:700}
+.meme-comments{color:var(--text-dim)}
+.meme-bars{display:flex;flex-direction:column;gap:5px}
+.meme-bar-row{display:flex;align-items:center;gap:8px}
+.meme-bar-label{font-size:.65rem;color:var(--text-dim);width:48px;flex-shrink:0}
+.meme-bar-track{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.meme-bar-fill{height:100%;border-radius:3px;transition:width .3s}
+.meme-bar-fill.viral{background:linear-gradient(90deg,#ff9100,#ff4444)}
+.meme-bar-fill.shirt{background:linear-gradient(90deg,#00b0ff,#00e676)}
+.meme-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+.meme-link{font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:6px;text-decoration:none;transition:opacity .15s}
+.meme-link:hover{opacity:.8}
+.meme-link.reddit{background:rgba(255,69,0,.15);color:#ff6314;border:1px solid rgba(255,69,0,.3)}
+.meme-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
+.meme-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
+.meme-link.pinterest{background:rgba(230,0,35,.15);color:#e60023;border:1px solid rgba(230,0,35,.3)}
+/* ── VIRAL PHRASES SECTION ── */
+.phrases-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
+.phrases-heading{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.phrases-heading-icon{font-size:1.6rem}
+.phrases-heading-title{font-size:1.35rem;font-weight:800;color:var(--text-primary)}
+.phrases-subhead{font-size:.88rem;color:var(--text-secondary);margin-bottom:18px}
+.phrases-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.phrase-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;transition:transform .15s,box-shadow .15s;position:relative}
+.phrase-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.phrase-rank{position:absolute;top:10px;right:12px;font-size:.72rem;font-weight:900;color:var(--text-dim)}
+.phrase-text{font-size:1.1rem;font-weight:800;color:var(--text-primary);line-height:1.3;font-style:italic}
+.phrase-meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.72rem}
+.phrase-sub{background:rgba(255,69,0,.12);color:#ff6314;padding:2px 8px;border-radius:10px;font-weight:700}
+.phrase-age{color:var(--text-dim)}
+.phrase-score{color:#00e676;font-weight:700}
+.phrase-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.phrase-link{font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:6px;text-decoration:none;transition:opacity .15s}
+.phrase-link:hover{opacity:.8}
+.phrase-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
+.phrase-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
+.phrase-link.pinterest{background:rgba(230,0,35,.15);color:#e60023;border:1px solid rgba(230,0,35,.3)}
+.phrase-link.google{background:rgba(66,133,244,.15);color:#4285f4;border:1px solid rgba(66,133,244,.3)}
+.phrase-link.reddit{background:rgba(255,69,0,.15);color:#ff6314;border:1px solid rgba(255,69,0,.3)}
+/* ── TIKTOK PHRASES SECTION ── */
+.tt-phrases-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
+.tt-phrases-heading{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.tt-phrases-heading-icon{font-size:1.6rem}
+.tt-phrases-heading-title{font-size:1.35rem;font-weight:800;color:var(--text-primary)}
+.tt-phrases-subhead{font-size:.88rem;color:var(--text-secondary);margin-bottom:18px}
+.tt-phrases-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.tt-phrase-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;position:relative;transition:transform .15s,box-shadow .15s}
+.tt-phrase-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.tt-rank{position:absolute;top:10px;right:12px;font-size:.72rem;font-weight:900;color:var(--text-dim)}
+.tt-signal-badge{display:inline-block;font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:10px;background:rgba(0,242,234,.12);color:#00f2ea;border:1px solid rgba(0,242,234,.25);margin-bottom:4px;width:fit-content}
+.tt-phrase-text{font-size:1.05rem;font-weight:800;color:var(--text-primary);line-height:1.3;font-style:italic}
+.tt-meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.72rem}
+.tt-sub{background:rgba(0,242,234,.1);color:#00c8c5;padding:2px 8px;border-radius:10px;font-weight:700}
+.tt-age{color:var(--text-dim)}
+.tt-score{color:#00e676;font-weight:700}
+.tt-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.tt-link{font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:6px;text-decoration:none;transition:opacity .15s}
+.tt-link:hover{opacity:.8}
+.tt-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
+.tt-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
+.tt-link.pinterest{background:rgba(230,0,35,.15);color:#e60023;border:1px solid rgba(230,0,35,.3)}
+.tt-link.reddit{background:rgba(255,69,0,.15);color:#ff6314;border:1px solid rgba(255,69,0,.3)}
+/* ── PINTEREST TRENDS SECTION ── */
+.pin-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
+.pin-heading{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.pin-heading-icon{font-size:1.6rem}
+.pin-heading-title{font-size:1.35rem;font-weight:800;color:var(--text-primary)}
+.pin-subhead{font-size:.88rem;color:var(--text-secondary);margin-bottom:18px}
+.pin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.pin-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;position:relative;transition:transform .15s,box-shadow .15s}
+.pin-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.pin-rank{position:absolute;top:10px;right:12px;font-size:.72rem;font-weight:900;color:var(--text-dim)}
+.pin-term{font-size:1rem;font-weight:800;color:var(--text-primary);line-height:1.35}
+.pin-source{font-size:.7rem;color:var(--text-dim);margin-top:-4px}
+.pin-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.pin-link{font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:6px;text-decoration:none;transition:opacity .15s}
+.pin-link:hover{opacity:.8}
+.pin-link.pinterest{background:rgba(230,0,35,.15);color:#e60023;border:1px solid rgba(230,0,35,.3)}
+.pin-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
+.pin-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
+.pin-link.google{background:rgba(66,133,244,.15);color:#4285f4;border:1px solid rgba(66,133,244,.3)}
+/* ── TRENDING MEDIA SECTION ── */
+.media-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
+.media-heading{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.media-heading-icon{font-size:1.6rem}
+.media-heading-title{font-size:1.35rem;font-weight:800;color:var(--text-primary)}
+.media-subhead{font-size:.88rem;color:var(--text-secondary);margin-bottom:10px}
+.media-legend{display:flex;gap:20px;margin-bottom:18px;font-size:.8rem;font-weight:700}
+.media-legend-item{opacity:.85}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.media-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;transition:transform .15s,box-shadow .15s;border-left-width:3px!important}
+.media-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.media-type-badge{display:inline-block;font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:20px;width:fit-content}
+.media-title{font-size:1rem;font-weight:800;color:var(--text-primary);line-height:1.3}
+.media-meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.72rem}
+.media-source{background:rgba(255,255,255,.07);color:var(--text-secondary);padding:2px 8px;border-radius:10px}
+.media-age{color:var(--text-dim)}
+.media-score{color:#00e676;font-weight:700}
+.media-angle{font-size:.78rem;color:var(--text-primary);background:rgba(255,145,0,.07);border-left:2px solid #ff9100;padding:6px 10px;border-radius:0 8px 8px 0;line-height:1.4}
+.media-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.media-link{font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:6px;text-decoration:none;transition:opacity .15s}
+.media-link:hover{opacity:.8}
+.media-link.google{background:rgba(66,133,244,.15);color:#4285f4;border:1px solid rgba(66,133,244,.3)}
+.media-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
+.media-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
+.media-link.source{background:rgba(255,255,255,.07);color:var(--text-secondary);border:1px solid var(--card-border)}
+/* ── FASHION BESTSELLERS SECTION ── */
+.fashion-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
+.fashion-heading{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.fashion-heading-icon{font-size:1.6rem}
+.fashion-heading-title{font-size:1.35rem;font-weight:800;color:var(--text-primary)}
+.fashion-subhead{font-size:.88rem;color:var(--text-secondary);margin-bottom:18px}
+.fashion-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.fashion-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;transition:transform .15s,box-shadow .15s;border-left-width:3px!important}
+.fashion-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.fashion-store-badge{display:inline-block;font-size:.75rem;font-weight:800;padding:4px 12px;border-radius:20px;width:fit-content;letter-spacing:.03em}
+.fashion-signal{font-size:.78rem;color:var(--text-secondary);font-style:italic;line-height:1.3;margin-bottom:2px}
+.fashion-theme{font-size:.8rem;color:var(--text-primary);background:rgba(255,145,0,.07);border-left:2px solid #ff9100;padding:6px 10px;border-radius:0 8px 8px 0;line-height:1.45;font-weight:500}
+.fashion-price{font-size:.75rem;font-weight:700;color:#00e676;opacity:.8}
+.fashion-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.fashion-link{font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:6px;text-decoration:none;transition:opacity .15s}
+.fashion-link:hover{opacity:.8}
+.fashion-link.google{background:rgba(66,133,244,.15);color:#4285f4;border:1px solid rgba(66,133,244,.3)}
+.fashion-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
+.fashion-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
+.fashion-link.source{background:rgba(255,255,255,.07);color:var(--text-secondary);border:1px solid var(--card-border)}
+/* ── BREAKING NEWS SECTION ── */
+.news-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
+.news-heading{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.news-heading-icon{font-size:1.6rem}
+.news-heading-title{font-size:1.35rem;font-weight:800;color:var(--text-primary)}
+.news-subhead{font-size:.88rem;color:var(--text-secondary);margin-bottom:18px}
+.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.news-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:18px;display:flex;gap:14px;align-items:flex-start;transition:box-shadow .2s}
+.news-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.news-rank{font-size:1.4rem;font-weight:900;color:var(--accent-start);min-width:32px;text-align:center;margin-top:2px}
+.news-body{flex:1;min-width:0}
+.news-headline{font-size:.95rem;font-weight:700;color:var(--text-primary);line-height:1.4;margin-bottom:6px}
+.news-headline a{color:inherit;text-decoration:none}
+.news-headline a:hover{text-decoration:underline;color:var(--accent-start)}
+.news-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.news-source{font-size:.78rem;color:var(--text-secondary);background:rgba(255,255,255,.05);padding:2px 8px;border-radius:20px}
+.news-age{font-size:.78rem;font-weight:600;color:var(--accent-start)}
+.news-angle{background:rgba(255,100,50,.08);border-left:3px solid var(--accent-start);border-radius:0 8px 8px 0;padding:8px 12px;margin-bottom:10px;font-size:.82rem}
+.news-angle-label{font-weight:700;color:var(--accent-start);margin-right:6px}
+.news-angle-text{color:var(--text-primary)}
+.news-links{display:flex;gap:8px;flex-wrap:wrap}
+.news-link{font-size:.75rem;font-weight:600;padding:4px 10px;border-radius:6px;text-decoration:none}
+.news-link.etsy{background:rgba(235,100,50,.15);color:#eb6432;border:1px solid rgba(235,100,50,.3)}
+.news-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
+.news-link.google{background:rgba(100,180,255,.15);color:#64b4ff;border:1px solid rgba(100,180,255,.3)}
+/* ── REDBUBBLE ARRIVALS SECTION ── */
+.rb-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
+.rb-heading{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.rb-heading-icon{font-size:1.6rem}
+.rb-heading-title{font-size:1.35rem;font-weight:800;color:var(--text-primary)}
+.rb-subhead{font-size:.8rem;color:var(--text-dim);margin-bottom:14px}
+.rb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:16px}
+.rb-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px;transition:transform .15s,box-shadow .15s}
+.rb-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.rb-badge{display:inline-block;font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:10px;margin-bottom:2px}
+.rb-badge.top{background:rgba(255,149,0,.18);color:#ff9100;border:1px solid rgba(255,149,0,.3)}
+.rb-badge.recent{background:rgba(0,200,120,.15);color:#00c878;border:1px solid rgba(0,200,120,.3)}
+.rb-title{font-size:.85rem;font-weight:700;color:var(--text-primary);line-height:1.35}
+.rb-designer{font-size:.72rem;color:var(--text-dim)}
+.rb-designer span{color:#aaa;font-weight:600}
+.rb-price{font-size:.8rem;font-weight:700;color:#00e676}
+.rb-price s{color:var(--text-dim);font-weight:400;font-size:.72rem;margin-left:4px}
+.rb-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+.rb-link{font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:6px;text-decoration:none;transition:opacity .15s}
+.rb-link:hover{opacity:.8}
+.rb-link.rb{background:rgba(230,0,35,.15);color:#e60023;border:1px solid rgba(230,0,35,.3)}
+.rb-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
+.rb-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
 /* ── SLANG SECTION ── */
 .slang-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
 .slang-heading{display:flex;align-items:center;gap:12px;margin-bottom:8px}
@@ -307,6 +501,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .slang-link.ud{background:rgba(255,149,0,.15);color:#ff9100;border:1px solid rgba(255,149,0,.3)}
 .slang-link.etsy{background:rgba(241,100,30,.15);color:#f1641e;border:1px solid rgba(241,100,30,.3)}
 .slang-link.amazon{background:rgba(255,153,0,.15);color:#ff9100;border:1px solid rgba(255,153,0,.3)}
+.slang-link.pinterest{background:rgba(230,0,35,.15);color:#e60023;border:1px solid rgba(230,0,35,.3)}
 .slang-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
 /* ── AMAZON NEW ARRIVALS SECTION (Session 18) ── */
 .amz-new-section{max-width:1320px;margin:0 auto 60px;padding:0 16px}
