@@ -1,0 +1,84 @@
+name: Refresh Trend Chaser
+
+# Pulls the latest niche-please-trends.surge.sh report every 12 hours,
+# regenerates trend-chaser/ from it, commits any changes, and republishes
+# the site to GitHub Pages.
+
+on:
+  schedule:
+    # every 12 hours, on the hour (UTC)
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+  # Re-publish whenever the workflow itself, the regen script, or the static
+  # files we serve change. This guarantees Pages picks up structural edits
+  # without waiting for the next scheduled refresh — and conveniently lets
+  # any merge to default kick off the very first run.
+  push:
+    branches:
+      - devin/1777220838-pr1-scaffold
+      - main
+      - master
+    paths:
+      - '.github/workflows/refresh-trend-chaser.yml'
+      - 'trend-chaser/scripts/**'
+      - 'trend-chaser/index.html'
+      - 'trend-chaser/styles.css'
+      - 'trend-chaser/script.js'
+      - 'trend-chaser/assets/**'
+
+permissions:
+  contents: write   # commit regen results back to the repo
+  pages: write      # deploy to GitHub Pages
+  id-token: write   # OIDC for Pages deploy
+
+concurrency:
+  group: refresh-trend-chaser
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: trend-chaser/scripts/requirements.txt
+
+      - name: Install regen dependencies
+        run: pip install --quiet -r trend-chaser/scripts/requirements.txt
+
+      - name: Regenerate trend-chaser/ from upstream
+        run: python3 trend-chaser/scripts/regen.py
+
+      - name: Commit any changes
+        env:
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          git add trend-chaser/
+          if git diff --staged --quiet; then
+            echo "No upstream changes — skipping commit"
+          else
+            ts=$(date -u +%Y-%m-%dT%H:%MZ)
+            git commit -m "chore(trend-chaser): auto-refresh $ts"
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: trend-chaser
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
