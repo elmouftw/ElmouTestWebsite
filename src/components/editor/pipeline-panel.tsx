@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import {
   ChevronDown,
   ChevronUp,
@@ -8,8 +8,13 @@ import {
   EyeOff,
   Plus,
   Trash2,
+  Search,
+  Save,
+  FolderOpen,
 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Sheet,
   SheetContent,
@@ -18,10 +23,20 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { listPlugins, getPlugin } from "@/lib/plugins/registry";
 import { useEditorStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { PluginFieldControl } from "./plugin-field";
+import { addPreset, deletePreset, loadPresets, type Preset } from "@/lib/presets";
+import { defaultOptionsFor } from "@/lib/plugins/types";
 
 export function PipelinePanel() {
   const pipeline = useEditorStore((s) => s.pipeline);
@@ -33,12 +48,152 @@ export function PipelinePanel() {
   const clearPipeline = useEditorStore((s) => s.clearPipeline);
 
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [presetsOpen, setPresetsOpen] = useState(false);
+  const [presets, setPresets] = useState<Preset[]>([]);
+  const [presetName, setPresetName] = useState("");
+
+  const refreshPresets = useCallback(() => {
+    setPresets(loadPresets());
+  }, []);
+
+  const allPlugins = useMemo(() => listPlugins(), []);
+
+  const filteredPlugins = useMemo(() => {
+    if (!searchQuery.trim()) return allPlugins;
+    const q = searchQuery.toLowerCase();
+    return allPlugins.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q),
+    );
+  }, [allPlugins, searchQuery]);
+
+  const handleSavePreset = useCallback(() => {
+    const name = presetName.trim();
+    if (!name) {
+      toast.error("Please enter a preset name");
+      return;
+    }
+    if (pipeline.length === 0) {
+      toast.error("Pipeline is empty");
+      return;
+    }
+    const { hadBlobUrls } = addPreset(name, pipeline);
+    setPresetName("");
+    setPresets(loadPresets());
+    if (hadBlobUrls) {
+      toast.warning(`Preset "${name}" saved. Note: uploaded file references (watermarks, masks) cannot be saved in presets — you'll need to re-upload them after loading.`);
+    } else {
+      toast.success(`Preset "${name}" saved`);
+    }
+  }, [presetName, pipeline]);
+
+  const handleLoadPreset = useCallback(
+    (preset: Preset) => {
+      clearPipeline();
+      for (const step of preset.pipeline) {
+        const plugin = getPlugin(step.pluginId);
+        if (plugin) {
+          addStep(step.pluginId);
+          const currentPipeline = useEditorStore.getState().pipeline;
+          const lastStep = currentPipeline[currentPipeline.length - 1];
+          if (lastStep) {
+            const merged = { ...defaultOptionsFor(plugin), ...step.options };
+            updateStepOptions(lastStep.stepId, merged);
+            if (!step.enabled) {
+              toggleStep(lastStep.stepId);
+            }
+          }
+        }
+      }
+      setPresetsOpen(false);
+      toast.success(`Preset "${preset.name}" loaded`);
+    },
+    [clearPipeline, addStep, updateStepOptions, toggleStep],
+  );
+
+  const handleDeletePreset = useCallback((id: string) => {
+    deletePreset(id);
+    setPresets(loadPresets());
+    toast.success("Preset deleted");
+  }, []);
 
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between border-b px-3 py-2">
         <h2 className="text-sm font-semibold">Pipeline</h2>
         <div className="flex items-center gap-1">
+          <Dialog open={presetsOpen} onOpenChange={(open) => { setPresetsOpen(open); if (open) refreshPresets(); }}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="sm" className="h-7 gap-1 px-2 text-xs">
+                <FolderOpen className="size-3.5" />
+                Presets
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-sm">
+              <DialogHeader>
+                <DialogTitle>Pipeline Presets</DialogTitle>
+                <DialogDescription>
+                  Save your current pipeline or load a saved preset.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-3">
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Preset name"
+                    value={presetName}
+                    onChange={(e) => setPresetName(e.target.value)}
+                    className="text-sm"
+                    onKeyDown={(e) => e.key === "Enter" && handleSavePreset()}
+                  />
+                  <Button
+                    size="sm"
+                    className="h-9 gap-1 shrink-0"
+                    onClick={handleSavePreset}
+                    disabled={pipeline.length === 0}
+                  >
+                    <Save className="size-3.5" />
+                    Save
+                  </Button>
+                </div>
+                {presets.length === 0 ? (
+                  <p className="text-center text-xs text-muted-foreground py-4">
+                    No saved presets yet.
+                  </p>
+                ) : (
+                  <ul className="max-h-60 space-y-1 overflow-y-auto">
+                    {presets.map((p) => (
+                      <li
+                        key={p.id}
+                        className="flex items-center justify-between gap-2 rounded-md border p-2 text-xs"
+                      >
+                        <button
+                          type="button"
+                          className="flex-1 text-left font-medium hover:text-foreground"
+                          onClick={() => handleLoadPreset(p)}
+                        >
+                          {p.name}
+                          <span className="ml-1 text-muted-foreground">
+                            ({p.pipeline.length} steps)
+                          </span>
+                        </button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-6 text-destructive"
+                          onClick={() => handleDeletePreset(p.id)}
+                        >
+                          <Trash2 className="size-3" />
+                        </Button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </DialogContent>
+          </Dialog>
           {pipeline.length > 0 && (
             <Button
               variant="ghost"
@@ -64,27 +219,44 @@ export function PipelinePanel() {
                 </SheetDescription>
               </SheetHeader>
               <div className="mt-4 space-y-2 px-4 pb-4">
-                {listPlugins().map((p) => (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() => {
-                      addStep(p.id);
-                      setPickerOpen(false);
-                    }}
-                    className="flex w-full items-start gap-3 rounded-lg border bg-card p-3 text-left text-sm transition-colors hover:border-foreground/30"
-                  >
-                    <span className="text-xl" aria-hidden>
-                      {p.icon}
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block font-medium">{p.name}</span>
-                      <span className="block text-xs text-muted-foreground">
-                        {p.description}
+                <div className="relative">
+                  <Search className="absolute left-2.5 top-2.5 size-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search plugins..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-8"
+                  />
+                </div>
+                <div className="max-h-[60vh] space-y-2 overflow-y-auto">
+                  {filteredPlugins.map((p) => (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => {
+                        addStep(p.id);
+                        setPickerOpen(false);
+                        setSearchQuery("");
+                      }}
+                      className="flex w-full items-start gap-3 rounded-lg border bg-card p-3 text-left text-sm transition-colors hover:border-foreground/30"
+                    >
+                      <span className="text-xl" aria-hidden>
+                        {p.icon}
                       </span>
-                    </span>
-                  </button>
-                ))}
+                      <span className="min-w-0">
+                        <span className="block font-medium">{p.name}</span>
+                        <span className="block text-xs text-muted-foreground">
+                          {p.description}
+                        </span>
+                      </span>
+                    </button>
+                  ))}
+                  {filteredPlugins.length === 0 && (
+                    <p className="py-4 text-center text-xs text-muted-foreground">
+                      No plugins match &ldquo;{searchQuery}&rdquo;
+                    </p>
+                  )}
+                </div>
               </div>
             </SheetContent>
           </Sheet>
